@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+
+{% block titulo %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+  <h2 class="h2"> Editar Incidencia </h2>
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <div class="btn-group mr-2">
+      <a href="/listProblematica" class="btn btn-sm btn-outline-secondary"><i class="fa fa-list-alt" aria-hidden="true"></i> Reportes </a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<form method="POST" class="post-form" name="formulario" id="forma">
+  {% csrf_token %}
+  <div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            {{ form.grupo|as_crispy_field }}
+          </div>
+      </div>
+ <div class="col-md-6">
+        <div class="form-group">
+            {{ form.alumno|as_crispy_field }}
+          </div>
+      </div>
+          <div class="col-md-8">
+        <div class="form-group">
+            {{ form.materia|as_crispy_field }}
+          </div>
+      </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            {{ form.user|as_crispy_field }}
+          </div>
+      </div>
+    <div class="col-md-8">
+        <div class="form-group">
+            {{ form.tipo|as_crispy_field }}
+          </div>
+      </div>
+       <div class="col-md-2">
+        <div class="form-group">
+            {{ form.parcial|as_crispy_field }}
+          </div>
+      </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            {{ form.semana|as_crispy_field }}
+          </div>
+      </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            {{ form.descripcion|as_crispy_field }}
+          </div>
+      </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            {{ form.solucion|as_crispy_field }}
+          </div>
+      </div>
+    <div class="col-md-3">
+        <div class="form-group">
+          {{ form.fecha|as_crispy_field }}
+          </div>
+      </div>
+  </div>
+    <input type="submit" class="btn btn-primary" name="submit" value="Guardar">
+</form>
+
+<script type="text/javascript">
+  $('#barra').hide();
+  $("#id_grupo").change(datosGpo);
+  $("#id_user > option[value={{request.user.id}}]").attr("selected",true);
+
+ function datosGpo(){
+      var url = "{% url 'llenaAl' %}";
+      $.ajax({
+        url: url,
+        data: {
+         'gpo': $("#id_grupo option:selected").text(),
+        },
+        success: function (data) {
+          $("#id_alumno").html(data);
+        }
+      });
+      datosMat()
+    }
+
+function datosMat(){
+      var url = "{% url 'llenaMat' %}";
+      $.ajax({
+        url: url,
+        data: {
+         'gpo': $("#id_grupo option:selected").text(),
+        },
+        success: function (data) {
+          $("#id_materia").html(data);
+        }
+      });
+    }
+
+</script>
+{% endblock %}

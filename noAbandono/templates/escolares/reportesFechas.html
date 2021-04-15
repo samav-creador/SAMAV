@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+  <h2 class="h2"> Inserte la Fecha </h2>
+</div>
+{% endblock %}
+
+{% block content %}
+<form action="/fechaRep" method="GET">
+    Fecha: 
+    <input id="fecha" type="text" name="fecha" class="form-control" style="width: 200px; border-radius: 5px; margin-right: 25px;" placeholder="Formato AAAA-MM-DD">
+    <br>
+    <input type="submit" class="btn btn-primary" value="CONFIRMAR">
+</form>
+{% endblock %}
+

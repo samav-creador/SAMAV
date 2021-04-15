@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block titulo%} Bienvenid@ <b>{{request.user.first_name}} {{request.user.last_name}}</b> {% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-lg-10">
+      <img class="d-block img-fluid" src="{% static 'img/logo_samav2.png'%}"  id="titulo">
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+
+{% block titulo %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+  <h2 class="h2"> Crear Incidencias </h2>
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <div class="btn-group mr-2">
+      <a href="/listProblematica" class="btn btn-sm btn-outline-secondary"><i class="fa fa-list-alt" aria-hidden="true"></i> Reportes </a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<center><h6 class="h6" style="margin-bottom: 1.5%; color: red;">Introduce los siguientes datos (* = Requerido)</h6></center>
+<br>
+<form method="POST" class="post-form" name="formulario"  id="forma">{% csrf_token %}
+  <div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            Grupo: * {{ form.grupo|as_crispy_field }}
+          </div>
+      </div>
+ <div class="col-md-6">
+        <div class="form-group">
+            Alumno: * {{ form.alumno|as_crispy_field }}
+          </div>
+      </div>
+          <div class="col-md-8">
+        <div class="form-group">
+            Materia: * {{ form.materia|as_crispy_field }}
+          </div>
+      </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            Profesor: * {{ form.user|as_crispy_field }}
+          </div>
+      </div>
+    <div class="col-md-8">
+        <div class="form-group">
+            Tipo: * {{ form.tipo|as_crispy_field }}
+          </div>
+      </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            Parcial: * {{ form.parcial|as_crispy_field }}
+          </div>
+      </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            Semana: * {{ form.semana|as_crispy_field }}
+          </div>
+      </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            Descripción: * {{ form.descripcion|as_crispy_field }}
+          </div>
+      </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            Solución: * {{ form.solucion|as_crispy_field }}
+          </div>
+      </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            Fecha: * {{ form.fecha|as_crispy_field }}
+          </div>
+      </div>
+  </div>
+    <input type="submit" class="btn btn-primary" id="guardar" name="submit" value="Guardar">
+</form>
+
+<script type="text/javascript">;
+  $("#id_grupo").change(datosGpo);
+  $("#id_user > option[value={{request.user.id}}]").attr("selected",true);
+
+ function datosGpo(){
+      var url = "{% url 'llenaAl' %}";
+      $.ajax({
+        url: url,
+        data: {
+         'gpo': $("#id_grupo option:selected").text(),
+        },
+        success: function (data) {
+          $("#id_alumno").html(data);
+        }
+      });
+      datosMat()
+    }
+
+function datosMat(){
+      var url = "{% url 'llenaMat' %}";
+      $.ajax({
+        url: url,
+        data: {
+         'gpo': $("#id_grupo option:selected").text(),
+        },
+        success: function (data) {
+          $("#id_materia").html(data);
+        }
+      });
+    }
+
+document.getElementById("id_user").addEventListener("click", function() {
+
+  // crea un campo oculto con el mismo nombre que la lista desplegable
+  var oculto = document.createElement("input");
+  oculto.type  = "hidden";
+  oculto.value = this.value;
+  oculto.name  = this.name;
+  document.getElementById("forma").appendChild(oculto);
+  
+  // deshabilita la lista desplegable
+  this.disabled = "disabled";
+});
+</script>
+{% endblock %}

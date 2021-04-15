@@ -1,0 +1,94 @@
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% load static %}
+
+<html lang="sp">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title> SAMAV | CECYTEQ </title>
+  <link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
+   <!-- CSS DE LA BARRA DE NAVEGACIÓN -->
+    <link rel="stylesheet" type="text/css" href="static/css/css-nav-lat.css">
+    <link rel="stylesheet" type="text/css" href="static/css/fontello.css">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- DATATABLES -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.21/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.21/datatables.min.js"></script>
+    <link href="https://code.jquery.com/jquery-3.5.1.js">
+    <script src="https://unpkg.com/xlsx@latest/dist/xlsx.full.min.js"></script>
+    <script src="https://unpkg.com/file-saverjs@latest/FileSaver.min.js"></script>
+    <script src="https://unpkg.com/tableexport@latest/dist/js/tableexport.min.js"></script>
+
+    <script src="{% static 'js/jspdf.debug.js' %}"></script>
+
+</head>
+
+<body>
+  <!-- ENCABEZADO -->
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow" style="height: 10%;">
+      <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-5" href="/"><img class="d-block img-fluid" src="{% static 'img/logo_samav1.png'%}"  id="logo"></a>
+      
+      <ul class="navbar-nav px-5">
+          <img class="d-block img-fluid" height="50" width="140" src="{% static 'img/logo_cecyte.png'%}"  id="logoC">
+      </ul>
+    </nav>
+  <!-- FIN DEL ENCABEZADO -->
+
+  <!-- INICIO DE LA BARRA DE NAVEGACIÓN -->
+    <div class="contenedor">
+      <div class="menu" id="barra">
+        <input type="checkbox" id="btn-menu">
+        <label for="btn-menu" class="icon-menu"></label>
+        <nav class="menu" id="nav">
+          <ul class="submenu">
+            <li><a href="/"><i aria-hidden="true"></i></a></li>
+            <li><a href="#"><i class="fa fa-desktop" aria-hidden="true"></i> Datos <span class="icon-down-open"></span></a>
+              <ul>
+                <li><a href="/listAlumno"><i class="fa fa-male" aria-hidden="true"></i> <i class="fa fa-female" aria-hidden="true"></i> Alumnos </a></li>
+                <li><a href="/listGrupo"><i class="fa fa-users" aria-hidden="true"></i> Grupos </a></li>
+                <li><a href="/listMateria"><i class="fa fa-laptop" aria-hidden="true"></i> Materias </a></li>
+              </ul>
+            </li>
+            <li><a href="#"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Incidencias <span class="icon-down-open"></a>
+              <ul>
+                <li><a href="crearProblematica"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Crear Incidencia </a></li>
+                <li><a href="/reportes"><i class="fa fa-bar-chart" aria-hidden="true"></i> Reportes </a></li>
+              </ul>
+            </li>
+            <li><a href="/accounts/logout/" target="_blank" onclick="closeCurrentWindow()"><i class="fa fa-power-off" aria-hidden="true"></i> Cerrar Sesión </a></li>
+          </ul>
+        </nav>
+      </div>
+<!-- FIN DE LA BARRA DE NAVEGACIÓN -->
+
+  <!-- CONTENIDO DE LA PÁGINA -->
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-10">
+            <h1 class="mt-4">{% block titulo %}{% endblock %}</h1>
+            <hr class="mt-0 mb-4">
+  
+                {% block content %}
+                {% endblock %}
+  
+          </div>
+        </div>
+      </div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="static/js/main.js"></script>
+<!-- FIN DEL CONTENIDO DE LA PÁGINA -->
+</body>
+
+{% block extrajs %}
+<script type="text/javascript">
+function closeCurrentWindow()
+{
+  window.close();
+}
+</script>
+ {% endblock %}
+
+{% bootstrap_javascript jquery='full' %}
+<script src="{% static 'js/feather.min.js' %}"></script>
+ </html>

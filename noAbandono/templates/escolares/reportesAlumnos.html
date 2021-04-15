@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+  <h2 class="h2"> Inserte Nombre del Alumno </h2>
+</div>
+{% endblock %}
+
+{% block content %}
+<form action="/RepAlum" method="GET">
+    Nombre Completo del Alumno: 
+    <input id="nombre" type="text" name="nombre" class="form-control" style="width: 300px; border-radius: 5px; margin-right: 30px;" placeholder="NOMBRE DEL ALUMNO">
+    <br><br>
+    <input type="submit" class="btn btn-primary" value="CONFIRMAR">
+</form>
+{% endblock %}
