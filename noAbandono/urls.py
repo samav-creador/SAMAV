@@ -40,9 +40,13 @@ urlpatterns = [
 	path('RepAlum', RepAlum, name='RepAlum'),
 	path('reportesGrupos', reportesGrupos, name='reportesGrupos'),
 	path('RepGpo', RepGpo, name='RepGpo'),
-	path('listProblematica', ProblematicasListView.as_view(), name='listProblematica'),
+	path('listProblematica/', ProblematicasListView, name='listProblematica'),
 	path('crearProblematica', ProblematicaCreateView.as_view(), name='crearProblematica'),
 	path('updateProblematica/<pk>/', ProblematicaUpdateView.as_view(), name='updateProblematica'),
 	path('llenaAl/', llenaAl, name='llenaAl'),
 	path('llenaMat/', llenaMat, name='llenaMat'),
+	path('llenaGpo/', llenaGpo, name='llenaGpo'),
+	path('llenaAlum/', llenaAlum, name='llenaAlum'),
+	#Éxito
+	path('success', SuccessView.as_view(), name='success'),
 ]

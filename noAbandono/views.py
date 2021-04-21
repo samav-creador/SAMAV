@@ -64,6 +64,9 @@ def register(request):
     # Si llegamos al final renderizamos el formulario
     return render(request, "register.html", {'form': form})
 
+class SuccessView(TemplateView):
+    template_name = 'success.html'
+
 #### Grupos ####
 
 class GruposListView(ListView):
@@ -74,7 +77,7 @@ class GrupoCreateView(CreateView):
     model = Grupo
     form_class = GrupoForm
     template_name = 'grupo.html'
-    success_url='listGrupo'
+    success_url='success'
 
 #### Alumnos ####
 
@@ -86,7 +89,7 @@ class AlumnoCreateView(CreateView):
     model = Alumno
     form_class = AlumnoForm
     template_name = 'alumno.html'
-    success_url='listAlumno'
+    success_url='success'
 
 #### Materias ####
 
@@ -98,7 +101,7 @@ class MateriaCreateView(CreateView):
     model = Materia
     form_class = MateriaForm
     template_name = 'materia.html'
-    success_url='listMateria'
+    success_url='success'
 
 #### Problemáticas ####
 
@@ -109,7 +112,8 @@ def reportesFechas(request):
     return render(request, "reportesFechas.html")
 
 def reportesAlumnos(request):
-    return render(request, "reportesAlumnos.html")
+    alumnos = Alumno.objects.all()
+    return render(request,"reportesAlumnos.html",{'alumnos':alumnos})
 
 def reportesGrupos(request):
     return render(request, "reportesGrupos.html")
@@ -121,29 +125,29 @@ def fechaRep(request):
     return render(request, "reporteFecha.html", context)
 
 def RepAlum(request):
-    nombre = request.GET.get('nombre')
-    id_al = Alumno.objects.filter(nombre__contains = nombre)[0]
+    id_al = request.GET.get('nombre')
     lista = Problematica.objects.filter(alumno = id_al)
     context = {'lista':lista}
     return render(request, "reporteAlumno.html", context)
 
 def RepGpo(request):
-    gpo = request.GET.get('nombre')
-    id_gpo = Grupo.objects.get(nombre = gpo)
+    id_gpo = request.GET.get('nombre')
     lista = Problematica.objects.filter(grupo = id_gpo)
     context = {'lista':lista}
     return render(request, "reporteGrupo.html", context)
 
-class ProblematicasListView(ListView):
-    model = Problematica
-    paginate_by = 10
-    template_name = 'problematicalist.html'
+def ProblematicasListView(request):
+    user = request.user.id
+    print("usuario: ", user)
+    lista = Problematica.objects.filter(user = user)
+    context = {'lista':lista}
+    return render(request, "problematicalist.html", context)
 
 class ProblematicaCreateView(CreateView):
     model = Problematica
     form_class = ProblematicaForm
     template_name = 'problematica.html'
-    success_url='listProblematica'
+    success_url='success'
 
 class ProblematicaUpdateView(UpdateView):
     model = Problematica
@@ -177,3 +181,11 @@ def llenaMat(request):
     grupo = request.GET.get('gpo')
     materias = Materia.objects.all().values('id','nombre').filter(grupo = str(grupo))
     return render(request,"llenaMat.html",{'materias':materias})
+
+def llenaGpo(request):
+    grupos = Grupo.objects.all().values('id','nombre')
+    return render(request,"llenaGpo.html",{'grupos':grupos})
+
+def llenaAlum(request):
+    alumnos = Alumno.objects.all().values('id','nombre').order_by('nombre')
+    return render(request,"llenaAlum.html",{'alumnos':alumnos})

@@ -18,35 +18,34 @@
   <table class="table table-striped table-sm" id="tabla" style="background-color: white;">
     <thead>
       <tr>
+        <th>#</th>
         <th>Tipo</th>
         <th>Descripción</th>
         <th>Solución</th>
         <th>Alumno</th>
+         <th>Grupo</th>
         <th>Profesor</th>
         <th>Materia</th>
         <th>Parcial</th>
         <th>Semana</th>
         <th>Fecha</th>
-        <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         {% for problematica in lista %}
-        <td>{{ problematica.tipo }}</a></td>
+        <td><a style="color:#3E69F8"; href="{% url 'updateProblematica' problematica.id %}"> {{ problematica.id }} </a></td>
+        <td>{{ problematica.tipo }}</td>
         <td>{{ problematica.descripcion }}</td>
         <td>{{ problematica.solucion }}</td>
-        <td>{{ problematica.alumno.nombre }}
-        {{ problematica.alumno.apellido_pat }}
-        {{ problematica.alumno.apellido_mat }}</td>
+        <td>{{ problematica.alumno.nombre }}</td>
+        <td>{{ problematica.grupo }}</td>
         <td>{{ problematica.user.first_name }}
         {{ problematica.user.last_name }}</td>
         <td>{{ problematica.materia.nombre }}</td>
         <td>{{ problematica.parcial }}</td>
         <td>{{ problematica.semana }}</td>
         <td>{{ problematica.fecha }}</td>
-        <td>
-          <a class="btn btn-primary" href="{% url 'updateProblematica' problematica.id %}"> Editar </a>
       </tr>
         {% empty %}
       <tr>
@@ -88,21 +87,18 @@ $btnExportar.addEventListener("click", function() {
    
 $(function() { 
  $('#btnCrearPdf').click(function() {
-  var options = {
-  };
-      var elementHandler = {
-  '#ignore': function (element, renderer) {
-    return true;
-  }
-};
-  var pdf =  new jsPDF('l', 'mm', [297, 210]);
+  var pdf =  new jsPDF('l', 'mm', 'letter');
   pdf.setFontSize(40)
-  pdf.text(20, 20, 'Incidencias por Fecha \n')
-  pdf.addHTML($("#tabla"), 0, 30, options, function() {
+  pdf.text(20, 20, 'Incidencias de la Fecha \n')
+  pdf.addHTML($("#tabla")[0], 10, 30,{
+      'background': '#fff',
+    },
+  function() {
     pdf.save('Incidencias_por_fecha.pdf');
   });
  });
 });
+
 
 
 </script>
